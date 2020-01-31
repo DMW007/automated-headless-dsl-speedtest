@@ -16,29 +16,33 @@
     <div class="row">
       <div class="col-lg-6 offset-3 mt-4">
         <table class="table">
-          <tr>
-            <th>Time</th>
-            <th>Download</th>
-            <th>Upload</th>
-            <th>Ping</th>
-          </tr>
-
-          {% for date in date_objects %}
-            {% set i = loop.index - 1%}
+          <thead>
             <tr>
-              <td>{{ date.strftime('%d.%m.%Y, %H:%M:%S') }}</td>
-              <td>{{ download_speeds[i] }}</td>
-              <td>{{ upload_speeds[i] }}</td>
-              <td>{{ pings[i] | round(1) }}</td>
+              <th>Time</th>
+              <th>Download</th>
+              <th>Upload</th>
+              <th>Ping</th>
             </tr>
-          {% endfor %}
+          </thead>
+
+          <tbody>
+            {% for date in date_objects %}
+              {% set i = loop.index - 1%}
+              <tr>
+                <td>{{ date.strftime('%d.%m.%Y, %H:%M:%S') }}</td>
+                <td>{{ download_speeds[i] }}</td>
+                <td>{{ upload_speeds[i] }}</td>
+                <td>{{ pings[i] | round(1) }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
         </table>
       </div>
     </div>
-    
+
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
     $(function() {
       var options = {
