@@ -7,6 +7,6 @@ fi
 echo "Start cron with interval = ${INTERVAL_MIN} min"
 while true
 do
-  python speedtest.py
+  python3 speedtest.py
   sleep ${INTERVAL_MIN}m
 done
