@@ -8,3 +8,12 @@ services:
       - ./db:/app/db
     environment:
       - INTERVAL_MIN=15
+
+  speedtest_web-ui:
+    build: .
+    entrypoint: python ./web/web.py
+    mem_limit: 512M
+    volumes:
+      - ./db:/app/db
+    ports:
+      - 8080:8080
