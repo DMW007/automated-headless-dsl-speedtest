@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  speedtest:
+    build: .
+    mem_limit: 512M
+    volumes:
+      - ./db:/app/db
+    environment:
+      - INTERVAL_MIN=15
