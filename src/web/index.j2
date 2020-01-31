@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DSL Speedtests</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+ 
+  </head>
+  <body>
+    <div class="row ml-4 mr-4">
+      <div id="chart-container"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6 offset-3 mt-4">
+        <table class="table">
+          <tr>
+            <th>Time</th>
+            <th>Download</th>
+            <th>Upload</th>
+            <th>Ping</th>
+          </tr>
+
+          {% for date in date_objects %}
+            {% set i = loop.index - 1%}
+            <tr>
+              <td>{{ date.strftime('%d.%m.%Y, %H:%M:%S') }}</td>
+              <td>{{ download_speeds[i] }}</td>
+              <td>{{ upload_speeds[i] }}</td>
+              <td>{{ pings[i] | round(1) }}</td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(function() {
+      var options = {
+            series: [{
+            name: 'Download',
+            data: {{ download_speeds | tojson | safe }}
+          }, {
+            name: 'Upload',
+            data: {{ upload_speeds | tojson | safe }}
+          }, {
+            name: 'Ping',
+            data: {{ pings | tojson | safe }}
+          }],
+            chart: {
+            height: 400,
+            type: 'line'
+          },
+          dataLabels: {
+            enabled: false
+          },
+          stroke: {
+            width: 3,
+            curve: 'straight',
+            dashArray: [0, 0, 7]
+          },
+          fill: {
+            type: 'gradient'
+          },
+          markers: {
+            size: 5,
+          },
+          xaxis: {
+            type: 'datetime',
+            categories: {{ dates | tojson | safe }}
+          },
+          yaxis: {
+            title: {
+              text: 'Speed (Mbit/s)'
+            }
+          },
+          tooltip: {
+            x: {
+              format: 'dd.MM.yyyy HH:mm'
+            },
+          },
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart-container"), options);
+        chart.render();
+
+        $('table').DataTable();
+    })
+    </script>
+  </body>
+</html>
