@@ -1,5 +1,5 @@
 # Automated headless DSL-Speedtests
-Tired of slow internet connections? And also tired of doing manual speed tests day per day to proof your slow connection? Automate it! You just need a Linux PC or server with Python or Docker, and 2 Minutes of your time. 
+Tired of slow internet connections? And also tired of doing manual speed tests day per day to analyze and proof your slow connection? Automate it! You just need a Linux PC or server with Python or Docker, and 2 Minutes of your time to measure internet speed!
 
 [![](https://u-img.net/img/6277Zo.png)](https://u-img.net/img/6277Zo.png)
 
@@ -19,13 +19,13 @@ So why should we spend our time by doing such things manually? Its a waste of ti
 It's tested on Linux (Ubuntu/Debian), bot not on Windows. You could try it as well, if Python 3 is installed. 
 
 ### Docker
-Per default, the included `docker-compose.yml` includes both cron and web container, which collects speed tests results every 15min. The web container runs on port 8080. You could adjust this to your environments and needs. For example, add labels to run it behind Traefik or any other reverse proxy.
+Per default, the included `docker-compose.yml` includes both cron and web container, which collects speed tests results every 15min. The web container runs on port 8081. You could adjust this to your environments and needs. For example, add labels to run it behind Traefik or any other reverse proxy.
 
 ```bash
 docker-compose up --build -d
 ```
 
-It takes a few seconds for the first speed test to complete. You could also see this in a log entry (`docker-compose logs -f`). The web ui should be avaliable on http://localhost:8080
+It takes a few seconds for the first speed test to complete. You could also see this in a log entry (`docker-compose logs -f`). The web ui should be avaliable on http://localhost:8081
 
 ### Manual
 Install the required pip packages as shown in the Dockerfile: 

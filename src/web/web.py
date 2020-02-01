@@ -9,7 +9,7 @@ from tzlocal import get_localzone
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from db import DB
 
-serverPort = 8080
+serverPort = 8081
 
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
