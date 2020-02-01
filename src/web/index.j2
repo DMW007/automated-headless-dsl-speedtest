@@ -30,9 +30,9 @@
               {% set i = loop.index - 1%}
               <tr>
                 <td>{{ date.strftime('%d.%m.%Y, %H:%M:%S') }}</td>
-                <td>{{ download_speeds[i] }}</td>
-                <td>{{ upload_speeds[i] }}</td>
-                <td>{{ pings[i] | round(1) }}</td>
+                <td>{{ download_speeds[i][1] }}</td>
+                <td>{{ upload_speeds[i][1] }}</td>
+                <td>{{ pings[i][1] | round(1) }}</td>
               </tr>
             {% endfor %}
           </tbody>
@@ -43,8 +43,13 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
     <script>
     $(function() {
+      let browserLocale = window.navigator.userLanguage || window.navigator.language
+      console.log(`Set moment.js locale to browser locale {browserLocale}`)
+      moment.locale(browserLocale)
+      
       var options = {
             series: [{
             name: 'Download',
@@ -76,7 +81,14 @@
           },
           xaxis: {
             type: 'datetime',
-            categories: {{ dates | tojson | safe }}
+            categories: {{ dates | tojson | safe }},
+            labels: {
+              {# Required for proper formatting respecting the local timezone #}
+              formatter: function(value, timestamp, index) {
+                let formatted = moment(new Date(timestamp)).format("L LTS")
+                return formatted
+              }
+            }
           },
           yaxis: {
             title: {

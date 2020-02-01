@@ -25,14 +25,17 @@ class MyServer(BaseHTTPRequestHandler):
         download_speeds = []
         upload_speeds = []
         pings = []
-        for row in rows:
-            dates.append(row['date'])
-            download_speeds.append(row['download'])
-            upload_speeds.append(row['upload'])
-            pings.append(row['ping'])
-
-            # Parse for UI
+        for i, row in enumerate(rows):
+            # Parsed for the UI table so that we can use custom formatting functions there
             date_objects.append(self.convert_to_local_time(row['date']))
+
+            # For ApexCharts we need the datetime in every element
+            ts = date_objects[i].__str__()
+            # Datetime as string is used to generate the categories (x)
+            dates.append(ts)
+            download_speeds.append([ts, row['download']])
+            upload_speeds.append([ts, row['upload']])
+            pings.append([ts, row['ping']])
 
         cwd = os.path.dirname(os.path.realpath(__file__))
         env = Environment(loader=FileSystemLoader(cwd))

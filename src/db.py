@@ -26,6 +26,6 @@ class DB:
         self.__con.commit()
 
     def get(self):
-        c = self.__con.execute('select * from speedtests order by date desc')
+        c = self.__con.execute('select * from speedtests order by date')
         rows = c.fetchall()
         return rows
