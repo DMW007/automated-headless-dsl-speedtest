@@ -27,6 +27,14 @@ docker-compose up --build -d
 
 It takes a few seconds for the first speed test to complete. You could also see this in a log entry (`docker-compose logs -f`). The web ui should be avaliable on http://localhost:8081
 
+### Update using docker
+Navigate to the directory where you cloned the repo. Pull the current state, then re-build and re-start the containers to get the latest updates:
+
+```bash
+git pull
+docker-compose down && docker-compose up -d --build
+```
+
 ### Manual
 Install the required pip packages as shown in the Dockerfile: 
 
