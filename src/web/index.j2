@@ -29,7 +29,7 @@
             {% for date in date_objects %}
               {% set i = loop.index - 1%}
               <tr>
-                <td>{{ date.strftime('%d.%m.%Y, %H:%M:%S') }}</td>
+                <td data-sort="{{ date.timestamp() | int }}">{{ date.strftime('%d.%m.%Y, %H:%M:%S') }}</td>
                 <td>{{ download_speeds[i][1] }}</td>
                 <td>{{ upload_speeds[i][1] }}</td>
                 <td>{{ pings[i][1] | round(1) }}</td>
@@ -105,7 +105,9 @@
         var chart = new ApexCharts(document.querySelector("#chart-container"), options);
         chart.render();
 
-        $('table').DataTable();
+        $('table').DataTable({
+          "order": [[ 0, "desc" ]]
+        });
     })
     </script>
   </body>
